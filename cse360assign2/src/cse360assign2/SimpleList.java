@@ -1,8 +1,8 @@
 // Name:		Joshua Norris
 // Class ID:	366
-// Assignment:	1
+// Assignment:	2
 // Description:	Adds and removes elements in an integer list, returns the integers as a string, and keeps track
-//				of the number of elements in the list
+//				of the number of elements in the list. Appends elements to the end of the list.
 
 
 package cse360assign2;
@@ -136,5 +136,50 @@ public class SimpleList
 				result = index;
 		}
 		return result;
+	}
+	
+	/* Appends given element to the end of the list.
+	 * Increase size if array is full
+	 */
+	public void append(int element)
+	{
+		if (count == this.list.length)	//Increase size and add element if full
+		{
+			int[] tempList = new int[(int) (count * 1.5)]; //New array of increase size
+			for (int index = 0; index < count; index++) //Copy elements to bigger array
+				tempList[index] = list[index];
+			this.list = new int[(int) (count * 1.5)]; //Have list be bigger array
+			for (int index = 1; index < count; index++) //Copy elements back into list
+				this.list[index] = tempList[index];
+		}
+		list[count] = element; //Put new element at end of array
+		count++;
+	}
+	
+	/* Returns first element in list or error if array is empty
+	 */
+	public int first()
+	{
+		if (count != 0) //Return first element if there are elements
+			return this.list[0];
+		else	//Return error if empty
+			return -1;
+	}
+	
+	/* Returns last element in list or error if array is empty
+	 */
+	public int last()
+	{
+		if (count != 0) //Return last element if there are elements
+			return this.list[count - 1];
+		else 	//Return error if empty
+			return -1;
+	}
+	
+	/* Returns size of the array (number of possible locations)
+	 */
+	public int size()
+	{
+		return this.list.length;
 	}
 }
