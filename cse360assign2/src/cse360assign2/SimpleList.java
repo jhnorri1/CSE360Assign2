@@ -31,16 +31,20 @@ public class SimpleList
 	/* Adds a given element into the array at index 0.
 	 * Any values already in the array are shifted one place to the right by traversing from right to left
 	 * through the array.
-	 * If the array is already full before the element is added, the last element is overwritten and dropped off.
+	 * If the array is already full before the element is added, the size of the array in increased by 50%.
 	 * The given element is inserted into index 0 in all situations.
 	 * The integer index is used to traverse the array from right to left.
 	 */
 	public void add(int element)
 	{
-		if (count == 10)	//Overwrite last element if full
+		if (count == this.list.length)	//Increase size and add element if full
 		{
-			for (int index = 9; index > 0; index--)
-				list[index] = list[index - 1];
+			int[] tempList = new int[(int) (count * 1.5)]; //New array of increase size
+			for (int index = count - 1; index > 0; index--) //Shift and copy elements to bigger array
+				tempList[index] = list[index - 1];
+			this.list = new int[(int) (count * 1.5)]; //Have list be bigger array
+			for (int index = 1; index < count; index++) //Copy elements back into list
+				this.list[index] = tempList[index];
 		}
 		else if (count > 0)
 		{
@@ -48,8 +52,7 @@ public class SimpleList
 				list[index] = list[index - 1];
 		}
 		list[0] = element;
-		if (count < 10)
-			count++;
+		count++;
 	}
 	
 	/* Removes a given element from the array if it exists in the array.
