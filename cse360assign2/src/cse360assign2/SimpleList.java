@@ -66,22 +66,34 @@ public class SimpleList
 	{
 		int[] newList = new int[10]; //New array with removed elements
 		int newIndex = 0; //Index for newList, prevents empty cells in the new array
-		for (int index = 0; index < count; index++)
+		if (count > 1)
 		{
-			if (list[index] == element)
+			for (int index = 0; index < count; index++)
 			{
-				newList[newIndex] = list[++index]; //Skip copying the item to be removed and increase index
-				count--;
+				if (list[index] == element)
+				{
+					newList[newIndex] = list[++index]; //Skip copying the item to be removed and increase index
+					count--;
+				}
+				else
+				{
+					newList[newIndex] = list[index];
+				}
+				newIndex++;
 			}
-			else
+			for (int index = 0; index < count; index++)
 			{
-				newList[newIndex] = list[index];
+				list[index] = newList[index];	//Copy the newList back into the original list
 			}
-			newIndex++;
 		}
-		for (int index = 0; index < count; index++)
+		if (count < (this.list.length * 0.75)) //If more than 25% is empty, decrease size
 		{
-			list[index] = newList[index];	//Copy the newList back into the original list
+			newList = new int[(int) (this.list.length * 0.75)];
+			for (int index = 0; index < count; index++) //Shift and copy elements to smaller array
+				newList[index] = list[index];
+			this.list = new int[newList.length]; //Have list be smaller array
+			for (int index = 0; index < count; index++) //Copy elements back into list
+				this.list[index] = newList[index];
 		}
 	}
 	
